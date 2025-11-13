@@ -1,0 +1,22 @@
+
+> ps-web@0.1.0 dev
+> next dev
+
+  ▲ Next.js 13.5.4
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Ready in 1394ms
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ Compiled /(auth-routes)/page in 2.6s (989 modules)
+ ✓ Compiled in 351ms (461 modules)
+ ✓ Compiled /not-found in 810ms (968 modules)
+ ✓ Compiled /favicon.ico/route in 579ms (549 modules)
+ ✓ Compiled /(admin-routes)/admin/page in 915ms (1105 modules)
+ ⚠ Fast Refresh had to perform a full reload when src/app/css/style.css, src/contexts/AppContext.tsx, src/contexts/AppointmentContext.tsx, src/contexts/AuthContext.tsx, src/contexts/CalendarContext.tsx, src/contexts/CategoryContext.tsx, src/contexts/CompanyContext.tsx, src/contexts/ProfileContext.tsx, src/providers/toast.provider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /not-found in 227ms (1086 modules)
+ ✓ Compiled /favicon.ico/route in 552ms (606 modules)
+ ✓ Compiled /(admin-routes)/company/page in 214ms (1130 modules)
+ ✓ Compiled /(admin-routes)/profile/page in 461ms (1116 modules)
