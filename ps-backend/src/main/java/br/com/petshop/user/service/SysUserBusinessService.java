@@ -335,22 +335,28 @@ public class SysUserBusinessService extends AuthenticationCommonService {
      */
     public SysUserMeResponse getMeInfo(Principal authentication) {
         try {
+            log.info("Starting getMeInfo for authentication: " + authentication.getName());
+            
             //recupera o id do usuário logado
             UserEntity entity = getSysAuthUser(authentication);
+            log.info("Retrieved user entity: " + entity.getId());
 
             //recupera a entidade do usuário logado
             entity = service.findById(entity.getId());
+            log.info("Found user in database: " + entity.getName());
 
             //recupera as informações da ultima loja acessada do usuário logado
             //(se nao tiver, carrega a primeira da lista do usuario logado)
             CompanyResponse companyEntity = companyService
                     .findActiveCompany(entity.getCurrentCompanyId(), entity.getCompanyIds());
+            log.info("Found company: " + companyEntity.getName());
 
             //carrega as permissoes
             List<ProfileResponse> profiles = profileService.getByIds(entity.getProfileIds());
             List<Permission> permissions = profiles.stream()
                     .flatMap(p -> p.getPermissions().stream())
                     .collect(Collectors.toList());
+            log.info("Loaded " + permissions.size() + " permissions");
 
             //converte a entidade na resposta final
             SysUserMeResponse response = converter.entityIntoMeResponse(entity);
@@ -358,10 +364,11 @@ public class SysUserBusinessService extends AuthenticationCommonService {
             response.setCompanyId(companyEntity.getId());
             response.setCompanyName(companyEntity.getName());
 
+            log.info("Successfully created response for user: " + entity.getName());
             return response;
 
         } catch (Exception ex) {
-            log.error(Message.USER_GET_ERROR.get() + " Error: " + ex.getMessage());
+            log.error(Message.USER_GET_ERROR.get() + " Error: " + ex.getMessage(), ex);
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, Message.USER_GET_ERROR.get(), ex);
         }

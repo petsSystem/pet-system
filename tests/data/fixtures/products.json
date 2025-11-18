@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Banho Simples",
+    "description": "Banho básico com shampoo neutro",
+    "price": 25.00,
+    "duration": 30,
+    "active": true
+  },
+  {
+    "name": "Banho e Tosa Completa",
+    "description": "Banho, tosa, corte de unhas e limpeza de ouvidos",
+    "price": 45.00,
+    "duration": 60,
+    "active": true
+  },
+  {
+    "name": "Consulta Veterinária",
+    "description": "Consulta clínica geral",
+    "price": 80.00,
+    "duration": 45,
+    "active": true
+  },
+  {
+    "name": "Vacinação",
+    "description": "Aplicação de vacinas",
+    "price": 35.00,
+    "duration": 15,
+    "active": true
+  }
+]

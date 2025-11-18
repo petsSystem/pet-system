@@ -1,0 +1,41 @@
+[
+  {
+    "name": "João Silva",
+    "cpf": "12345678901",
+    "email": "joao.silva@email.com",
+    "phone": "(11) 99999-1111",
+    "address": {
+      "street": "Rua das Flores, 123",
+      "neighborhood": "Centro",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01234-567"
+    }
+  },
+  {
+    "name": "Maria Santos",
+    "cpf": "98765432100",
+    "email": "maria.santos@email.com",
+    "phone": "(11) 88888-2222",
+    "address": {
+      "street": "Av. Paulista, 456",
+      "neighborhood": "Bela Vista",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01310-100"
+    }
+  },
+  {
+    "name": "Pedro Oliveira",
+    "cpf": "11122233344",
+    "email": "pedro.oliveira@email.com",
+    "phone": "(11) 77777-3333",
+    "address": {
+      "street": "Rua Augusta, 789",
+      "neighborhood": "Consolação",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01305-000"
+    }
+  }
+]

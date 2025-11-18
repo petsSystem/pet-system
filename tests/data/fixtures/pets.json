@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Rex",
+    "specie": "DOG",
+    "breed": "GOLDEN_RETRIEVER",
+    "gender": "MALE",
+    "size": "LARGE",
+    "coat": "LONG",
+    "temper": "DOCILE",
+    "birthDate": "2020-05-15",
+    "weight": 25.5,
+    "observations": "Muito dócil e brincalhão"
+  },
+  {
+    "name": "Mimi",
+    "specie": "CAT",
+    "breed": "PERSIAN",
+    "gender": "FEMALE",
+    "size": "MEDIUM",
+    "coat": "LONG",
+    "temper": "CALM",
+    "birthDate": "2021-03-10",
+    "weight": 4.2,
+    "observations": "Gata persa, muito calma"
+  },
+  {
+    "name": "Bob",
+    "specie": "DOG",
+    "breed": "BULLDOG",
+    "gender": "MALE",
+    "size": "MEDIUM",
+    "coat": "SHORT",
+    "temper": "FRIENDLY",
+    "birthDate": "2019-11-22",
+    "weight": 18.0,
+    "observations": "Bulldog francês, muito amigável"
+  }
+]

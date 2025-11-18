@@ -25,14 +25,15 @@ public abstract class AuthenticationCommonService {
     }
 
     public UserEntity getSysAuthUser(Principal authentication) {
-        return ((UserEntity) ((UsernamePasswordAuthenticationToken)
-                authentication).getPrincipal());
+        Object principal = ((UsernamePasswordAuthenticationToken) authentication).getPrincipal();
+        if (principal instanceof UserEntity) {
+            return (UserEntity) principal;
+        }
+        throw new ClassCastException("Principal is not an instance of UserEntity: " + principal.getClass().getName());
     }
 
     public Role getSysRole(Principal authentication) {
-        UserEntity systemUser = ((UserEntity) ((UsernamePasswordAuthenticationToken)
-                authentication).getPrincipal());
-
+        UserEntity systemUser = getSysAuthUser(authentication);
         return systemUser.getRole();
     }
 }

@@ -1,0 +1,12 @@
+{
+  "amazonQ.projectContext": {
+    "documentationFile": "DOCUMENTACAO_PROJETO.md",
+    "autoLoad": true,
+    "description": "Documentação principal do sistema Pet Shop"
+  },
+  "amazonQ.rules": [
+    "Sempre consulte DOCUMENTACAO_PROJETO.md antes de responder sobre o projeto",
+    "Use a documentação como fonte primária de informações sobre arquitetura",
+    "Mantenha consistência com os padrões documentados"
+  ]
+}

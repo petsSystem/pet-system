@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Banho e Tosa",
+    "description": "Serviços de higiene e estética para pets",
+    "active": true
+  },
+  {
+    "name": "Veterinário",
+    "description": "Consultas e procedimentos veterinários",
+    "active": true
+  },
+  {
+    "name": "Pet Shop",
+    "description": "Produtos e acessórios para pets",
+    "active": true
+  },
+  {
+    "name": "Hospedagem",
+    "description": "Hotel e creche para animais",
+    "active": true
+  }
+]
