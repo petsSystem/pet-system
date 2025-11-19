@@ -28,6 +28,7 @@ public class SysUserCreateRequest implements Serializable {
     @NotNull
     private String email;
     private String phone;
+    private String password;
     @NotNull
     private List<UUID> profileIds;
     @NotNull

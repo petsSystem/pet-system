@@ -7,6 +7,7 @@ import { UrlsEnum } from "../enums";
 
 interface CompanyContextProps {
   getCompanies: () => Promise<any>;
+  getAllCompanies: () => Promise<CompanyDTO[]>;
   setSelectedCompanyLocally: (id: string) => void;
   findSelectedCompanyById: (
     companyId: string | undefined
@@ -14,6 +15,8 @@ interface CompanyContextProps {
   companies: CompanyDTO[] | null | undefined;
   selectedCompany: CompanyDTO | undefined;
   updateCompany: (company: CompanyDTO) => void;
+  createCompany: (company: Omit<CompanyDTO, 'id'>) => Promise<CompanyDTO>;
+  deleteCompany: (id: string) => Promise<void>;
 }
 
 export const CompanyContext = createContext<CompanyContextProps>(
@@ -38,6 +41,34 @@ export const CompanyProvider: React.FC<{
           setSelectedCompanyLocally(profile?.companyId);
         }
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function getAllCompanies(): Promise<CompanyDTO[]> {
+    try {
+      const { data } = await api.get(UrlsEnum.COMPANIES);
+      return data.content || [];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function createCompany(companyData: Omit<CompanyDTO, 'id'>): Promise<CompanyDTO> {
+    try {
+      const { data } = await api.post(UrlsEnum.COMPANIES, companyData);
+      setCompanies(prev => [...prev, data]);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function deleteCompany(id: string): Promise<void> {
+    try {
+      await api.delete(`${UrlsEnum.COMPANIES}/${id}`);
+      setCompanies(prev => prev.filter(company => company.id !== id));
     } catch (error) {
       throw error;
     }
@@ -77,9 +108,12 @@ export const CompanyProvider: React.FC<{
       value={{
         companies: companies,
         getCompanies,
+        getAllCompanies,
         setSelectedCompanyLocally,
         selectedCompany,
         updateCompany,
+        createCompany,
+        deleteCompany,
         findSelectedCompanyById,
       }}
     >

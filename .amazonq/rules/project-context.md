@@ -40,9 +40,19 @@ Este arquivo contém:
 - Não assuma funcionalidades sem verificar
 - Não ignore a estrutura documentada
 
+## 🌐 CONFIGURAÇÃO DE AMBIENTE
+
+### **PORTAS DO SISTEMA**
+- **Backend (ps-backend)**: `http://localhost:5000`
+- **Frontend (ps-web)**: `http://localhost:3000`
+- **Database (PostgreSQL)**: `localhost:5432`
+
+⚠️ **IMPORTANTE**: O backend roda na porta **5000**, NÃO na porta 8080!
+
 ## ✅ SEMPRE FAÇA
 
 - Consulte a documentação principal primeiro
 - Use as informações como base de conhecimento
 - Complemente com arquivos específicos quando necessário
 - Mantenha consistência com a arquitetura documentada
+- **Use a porta 5000 para chamadas ao backend local**

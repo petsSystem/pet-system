@@ -1,4 +1,6 @@
 export function formatWithMask(value: string, mask: string): string {
+  if (!value || !mask) return value || "";
+  
   let valueIndex = 0;
   let result = "";
 

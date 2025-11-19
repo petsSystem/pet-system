@@ -72,7 +72,10 @@ public class SysUserService {
             throw new GenericAlreadyRegisteredException();
         }
 
-        String password = generateToken();
+        // Usar senha fornecida ou gerar uma nova
+        String password = (request.getPassword() != null && !request.getPassword().isEmpty()) 
+            ? request.getPassword() 
+            : generateToken();
 
         request.setUsername(request.getCpf());
         request.setPassword(passwordEncoder.encode(password));

@@ -19,8 +19,8 @@ export const sidebarRoutes = [
     resource: ResourcesEnum.ADMIN,
   },
   {
-    to: "/company",
-    label: "Petshop",
+    to: "/companies",
+    label: "Empresas",
     icon: IconStore,
     resource: ResourcesEnum.COMPANY,
   },

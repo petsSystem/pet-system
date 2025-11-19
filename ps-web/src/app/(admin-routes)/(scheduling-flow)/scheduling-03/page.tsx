@@ -61,28 +61,44 @@ export default function Scheduling01() {
   }: ParamGetProducts) {
     try {
       setIsLoading(true);
+      console.log('=== CARREGANDO SERVIÇOS ===');
+      console.log('CompanyId:', companyId);
+      console.log('CategoryId:', categoryId);
+      console.log('Additional:', additional);
+      
       const productsData = await fetchProducts({
         companyId,
         additional,
         categoryId,
       });
+      
+      console.log('=== SERVIÇOS CARREGADOS ===');
+      console.log('Total de serviços:', productsData.length);
+      console.log('Serviços:', productsData);
+      
       setProducts(productsData);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao carregar serviços:', error);
     } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
+    console.log('=== USEEFFECT SERVIÇOS ===');
+    console.log('SelectedCompany:', selectedCompany);
+    console.log('Category:', schedulingFormData.category);
+    
     if (selectedCompany?.id && schedulingFormData.category?.id) {
       fetchData({
         companyId: selectedCompany?.id,
         categoryId: schedulingFormData.category?.id,
-        additional: false,
+        additional: undefined, // Removendo filtro additional temporariamente
       });
+    } else {
+      console.log('Dados insuficientes para carregar serviços');
     }
-  }, []);
+  }, [selectedCompany?.id, schedulingFormData.category?.id]);
 
   const handleSelect = (product: ProductDTO) => {
     setAppointmentProduct(product);
@@ -125,36 +141,49 @@ export default function Scheduling01() {
                 </h3>
                 {/* Form */}
 
-                <div className="grid grid-cols-3 gap-2">
-                  {products.map((product) => (
-                    <RadioCard
-                      key={product.id}
-                      onClick={() => handleSelect(product)}
-                      label={product.name}
-                      description={""}
-                      defaultChecked={
-                        product.id === schedulingFormData.product?.id
-                      }
-                      icon={
-                        <svg
-                          className="inline-flex w-10 h-10 shrink-0 fill-current mb-2"
-                          viewBox="0 0 40 40"
-                        >
-                          <circle
-                            className="text-primary-100"
-                            cx="20"
-                            cy="20"
-                            r="20"
-                          />
-                          <path
-                            className="text-primary-500"
-                            d="m26.371 23.749-3.742-1.5a1 1 0 0 1-.629-.926v-.878A3.982 3.982 0 0 0 24 17v-1.828A4.087 4.087 0 0 0 20 11a4.087 4.087 0 0 0-4 4.172V17a3.982 3.982 0 0 0 2 3.445v.878a1 1 0 0 1-.629.928l-3.742 1.5a1 1 0 0 0-.629.926V27a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.323a1 1 0 0 0-.629-.928Z"
-                          />
-                        </svg>
-                      }
-                    />
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div className="text-center py-8">
+                    <div className="text-gray-500">Carregando serviços...</div>
+                  </div>
+                ) : products.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-2">
+                    {products.map((product) => (
+                      <RadioCard
+                        key={product.id}
+                        onClick={() => handleSelect(product)}
+                        label={product.name}
+                        description={""}
+                        defaultChecked={
+                          product.id === schedulingFormData.product?.id
+                        }
+                        icon={
+                          <svg
+                            className="inline-flex w-10 h-10 shrink-0 fill-current mb-2"
+                            viewBox="0 0 40 40"
+                          >
+                            <circle
+                              className="text-primary-100"
+                              cx="20"
+                              cy="20"
+                              r="20"
+                            />
+                            <path
+                              className="text-primary-500"
+                              d="m26.371 23.749-3.742-1.5a1 1 0 0 1-.629-.926v-.878A3.982 3.982 0 0 0 24 17v-1.828A4.087 4.087 0 0 0 20 11a4.087 4.087 0 0 0-4 4.172V17a3.982 3.982 0 0 0 2 3.445v.878a1 1 0 0 1-.629.928l-3.742 1.5a1 1 0 0 0-.629.926V27a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.323a1 1 0 0 0-.629-.928Z"
+                            />
+                          </svg>
+                        }
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <div className="text-yellow-700 mb-2">⚠️ Nenhum serviço encontrado</div>
+                    <div className="text-sm text-yellow-600">
+                      Verifique se existem serviços ativos cadastrados para esta categoria.
+                    </div>
+                  </div>
+                )}
 
                 <h3 className="text-2md text-slate-600 dark:text-slate-100 font-bold mb-4 mt-8">
                   Escolha serviço adicionais (Opcional)

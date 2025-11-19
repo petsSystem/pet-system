@@ -73,8 +73,11 @@ const UserForm = () => {
 
   const { id } = params;
   const actionParam: string | null = searchParams.get("action");
+  const companyIdParam: string | null = searchParams.get("companyId");
+  const roleParam: string | null = searchParams.get("role");
   const labelButton = getActionLabel(actionParam as ActionType);
   const selectedCompany = findSelectedCompanyById(profile?.companyId);
+  const isCreatingOwner = roleParam === "OWNER" && companyIdParam;
 
   const [profiles, setProfiles] = useState<ProfileRoleResponseDTO[]>([]);
   const [schedules, setSchedules] = useState<ScheduleResponse[]>([]);
@@ -207,11 +210,21 @@ const UserForm = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
     if (actionParam === "add") {
+      // Se está criando OWNER, buscar o perfil OWNER automaticamente
+      let profileIds = data.profileIds;
+      if (isCreatingOwner) {
+        const ownerProfile = profiles.find(p => p.role === "OWNER");
+        if (ownerProfile) {
+          profileIds = [ownerProfile.id];
+        }
+      }
+      
       const addUserData = {
         ...data,
         cpf: extractNumbers(data.cpf),
         phone: extractNumbers(data.phone),
-        companyIds: [selectedCompany?.id],
+        profileIds: profileIds,
+        companyIds: isCreatingOwner ? [companyIdParam] : [selectedCompany?.id],
         address: {
           ...data.address,
           postalCode: extractNumbers(data.address.postalCode),
@@ -223,8 +236,11 @@ const UserForm = () => {
       try {
         setIsLoading(true);
         await api.post(UrlsEnum.USERS, addUserData);
-        toastPS("Usuário adicionado com sucesso", "success");
-        route.push(`/user`);
+        const successMessage = isCreatingOwner 
+          ? "Proprietário criado com sucesso! Senha padrão: 123456" 
+          : "Usuário adicionado com sucesso";
+        toastPS(successMessage, "success");
+        route.push(isCreatingOwner ? `/companies` : `/user`);
       } catch (errors: any) {
         toastPS(errors.message, "error");
       } finally {
@@ -283,7 +299,7 @@ const UserForm = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex justify-between items-start">
                   <h2 className="text-2xl text-slate-500 font-bold mb-2">
-                    Dados Gerais
+                    {isCreatingOwner ? "Novo Proprietário" : "Dados Gerais"}
                   </h2>
                   {actionParam === "edit" && !userData?.active && (
                     <Banner type="warning" open={true}>
@@ -416,27 +432,40 @@ const UserForm = () => {
                     disabled={isView}
                   />
                 </div>
-                <h2 className="text-2xl text-slate-500 font-bold mb-2">
-                  Perfil de acesso
-                </h2>
-                <div className="grid gap-2 md:grid-cols-3" key="profileIds">
-                  {profiles.length ? (
-                    profiles?.map((role, id) => (
-                      <CheckBox
-                        id="profileIds"
-                        key={id}
-                        label={role.name}
-                        register={register}
-                        value={role.id}
-                        disabled={isView}
-                      />
-                    ))
-                  ) : (
-                    <Banner type="warning" open={true}>
-                      {profileMsg}
+                {!isCreatingOwner && (
+                  <>
+                    <h2 className="text-2xl text-slate-500 font-bold mb-2">
+                      Perfil de acesso
+                    </h2>
+                    <div className="grid gap-2 md:grid-cols-3" key="profileIds">
+                      {profiles.length ? (
+                        profiles?.map((role, id) => (
+                          <CheckBox
+                            id="profileIds"
+                            key={id}
+                            label={role.name}
+                            register={register}
+                            value={role.id}
+                            disabled={isView}
+                          />
+                        ))
+                      ) : (
+                        <Banner type="warning" open={true}>
+                          {profileMsg}
+                        </Banner>
+                      )}
+                    </div>
+                  </>
+                )}
+                
+                {isCreatingOwner && (
+                  <div className="mb-4">
+                    <Banner type="info" open={true}>
+                      🏢 Este usuário será criado como PROPRIETÁRIO da empresa selecionada.<br/>
+                      🔑 Senha padrão: <strong>123456</strong> (deve ser alterada no primeiro login)
                     </Banner>
-                  )}
-                </div>
+                  </div>
+                )}
 
                 <h2 className="text-2xl text-slate-500 font-bold mb-4 mt-4">
                   Agenda
